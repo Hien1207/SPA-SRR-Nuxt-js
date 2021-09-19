@@ -1,69 +1,48 @@
-# vd
-
-## Build Setup
-
-```bash
-# install dependencies
-$ npm install
-
-# serve with hot reload at localhost:3000
-$ npm run dev
-
-# build for production and launch server
-$ npm run build
-$ npm run start
-
-# generate static project
-$ npm run generate
-```
-
-For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
-
-## Special Directories
-
-You can create the following extra directories, some of which have special behaviors. Only `pages` is required; you can delete them if you don't want to use their functionality.
-
-### `assets`
-
-The assets directory contains your uncompiled assets such as Stylus or Sass files, images, or fonts.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/assets).
-
-### `components`
-
-The components directory contains your Vue.js components. Components make up the different parts of your page and can be reused and imported into your pages, layouts and even other components.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/components).
-
-### `layouts`
-
-Layouts are a great help when you want to change the look and feel of your Nuxt app, whether you want to include a sidebar or have distinct layouts for mobile and desktop.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/layouts).
-
-
-### `pages`
-
-This directory contains your application views and routes. Nuxt will read all the `*.vue` files inside this directory and setup Vue Router automatically.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/get-started/routing).
-
-### `plugins`
-
-The plugins directory contains JavaScript plugins that you want to run before instantiating the root Vue.js Application. This is the place to add Vue plugins and to inject functions or constants. Every time you need to use `Vue.use()`, you should create a file in `plugins/` and add its path to plugins in `nuxt.config.js`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/plugins).
-
-### `static`
-
-This directory contains your static files. Each file inside this directory is mapped to `/`.
-
-Example: `/static/robots.txt` is mapped as `/robots.txt`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/static).
-
-### `store`
-
-This directory contains your Vuex store files. Creating a file in this directory automatically activates Vuex.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/store).
+## Serve Side Rendering và Single Page Application 
+ # SSR: Gọi nó là server-side rendering là vì phần lớn logic sẽ được xử lý ở server.
+    - Một số tính chất của cơ chế server side rendering:
+      + Logic từ đơn giản cho đến phức tạp đều nằm ở phía server.
+      + Logic để routing – chuyển trang nằm ở server.
+      + Logic để render – hiển thị trang web cũng nằm ở server nốt.
+    - Ưu điểm: 
+      + Hỗ trợ rất mạnh việc SEO bởi vì các Search engines của Google có thể Crawler dữ liệu tốt hơn.
+      + Load trang lần đầu tiên sẽ rất nhanh.
+      + Hỗ trợ tốt cho các static page.
+    - Nhược điểm:
+      + Trang web phải xử lý lại hoàn toàn và load lại từ đầu nếu chỉ có một thay đổi nhỏ trong nội dung gây khó chịu.
+      + Nặng server vì server phải xử lý nhiều logic và dữ liệu.
+      + Việc xử lý nội dung HTML khiến hao tốn tài nguyên server, gây chậm trễ khi xử lý các request khác.
+      + Lượng request lên server rất nhiều, do mọi tác vụ đều phải xử lý lại trên server và render lại HTML.
+      + Trải nghiệm người dùng không tốt. 
+# CPA: Toàn bộ source của trang web sẽ được load ngay lần đầu tiên, khi chuyển trang trình duyệt sẽ gửi những yêu cầu get dữ liệu cần thiết, chỉ load lại những nội dung thay đổi.
+    - Một số tính chất của cơ chế Single Page Application:
+      + Những logic đơn giản nằm ở client side
+      + Logic để routing, render dữ liệu thì 96.69% là nằm ở client side
+      + Logic phức tạp hoặc cần xử lý nhiều vẫn nằm ở server side.
+    - Ưu điểm: 
+      + Thông tin được render một lần duy nhất trên một trang duy nhất
+      + Có sự phân chia công việc rõ ràng giữa FE và BE
+      + Hạn chế truy vấn đến Serve
+      + Hiệu quả trải nghiệm người dùng cao hơn 
+    - Nhược điểm: 
+      + Trình duyệt phải bật JS
+      + Khó khăn trong việc SEO      
+## Nuxt.Js
+    - Là một framework của Vue.Js
+    - Nuxt.JS có rất nhiều tính năng hữu ích, giúp bạn nhanh chóng xây dựng các ứng dụng web, có thể kể tới như:
+      + Automatic Code Splitting
+      + Hỗ trợ Vue hoàn hảo
+      + Static File Rendering
+      + Hỗ trợ phiên bản HTTP/2
+      +...
+    - Cấu trúc thư mục: 
+         + Không có Main.js và App.vue
+         + Nếu một trang không khai báo sử dụng layout nào thì default layout sẽ được dùng
+         + Assets: Chứa những tài nguyên phục vụ hiển thị trang web như ảnh, fonts chữ, hay CSS…
+         + Middleware: Middleware là nới bạn dùng để tạo các function mà chạy trước khi render trang.
+         + Pages: Thư mục này chứa các view của ứng dụng cũng như định nghĩa routes cho ứng dụng luôn.
+         + Static :Tương tự như thư mục assets nhưng mà nó cho phép truy cập trực tiếp, được map tự động với domain từ client mà không cần phải qua router hay biến môi trường.
+         + Store : Chứa các tệp của vuex, dùng quản lý state của ứng dụng. Vuex Store được cài đặt kèm với Nuxt nhưng mặc định thì lại bị disable. 
+         + import thư viện trong thư mục plugin dùng bất cứ đâu trong dự án khác với trong vue import ở main.js, vue.use(thư viện)
+         + Routing: Cách thức hoạt động của router trong Nuxt là nó tự động tạo cấu hình vue-router dựa trên cây các tệp .vue trong thư mục pages.
+         + Route lồng nhau: NuxtJS cho phép bạn tạo các route lồng nhau bằng cách sử dụng các route con của vue-router.
